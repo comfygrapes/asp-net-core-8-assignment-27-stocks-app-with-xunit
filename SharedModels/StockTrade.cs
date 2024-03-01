@@ -1,4 +1,4 @@
-﻿namespace SharedModels
+﻿namespace Entities
 {
     public class StockTrade
     {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using ServiceContracts;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace Services
