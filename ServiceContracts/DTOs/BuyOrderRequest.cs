@@ -1,4 +1,5 @@
-﻿using Entities.CustomValidationAttributes;
+﻿using Entities;
+using Entities.CustomValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceContracts.DTOs
@@ -15,5 +16,18 @@ namespace ServiceContracts.DTOs
         public uint Quantity { get; set; }
         [Range(1, 10000)]
         public double Price { get; set; }
+
+        public BuyOrder ToBuyOrder(Guid buyOrderId)
+        {
+            return new BuyOrder
+            {
+                BuyOrderId = buyOrderId,
+                StockSymbol = StockSymbol,
+                StockName = StockName,
+                DateAndTimeOfOrder = DateAndTimeOfOrder,
+                Quantity = Quantity,
+                Price = Price
+            };
+        }
     }
 }

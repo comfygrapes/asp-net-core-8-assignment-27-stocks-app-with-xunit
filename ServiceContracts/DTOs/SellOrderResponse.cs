@@ -15,13 +15,29 @@ namespace ServiceContracts.DTOs
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
-            if (obj is not BuyOrderResponse otherSellOrderResponse) return false;
-            return SellOrderId == otherSellOrderResponse.BuyOrderId;
+            if (obj is not SellOrderResponse otherSellOrderResponse) return false;
+            return SellOrderId == otherSellOrderResponse.SellOrderId;
         }
 
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+    }
+
+    public static class SellOrderExtensions
+    {
+        public static SellOrderResponse ToSellOrderResponse(this SellOrder sellOrder)
+        {
+            return new SellOrderResponse()
+            {
+                SellOrderId = sellOrder.SellOrderId,
+                StockSymbol = sellOrder.StockSymbol,
+                StockName = sellOrder.StockName,
+                DateAndTimeOfOrder = sellOrder.DateAndTimeOfOrder,
+                Quantity = sellOrder.Quantity,
+                Price = sellOrder.Price,
+            };
         }
     }
 }

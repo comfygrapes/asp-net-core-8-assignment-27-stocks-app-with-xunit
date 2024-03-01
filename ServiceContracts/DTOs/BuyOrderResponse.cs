@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServiceContracts.DTOs
 {
@@ -21,6 +22,22 @@ namespace ServiceContracts.DTOs
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+    }
+
+    public static class BuyOrderExtensions
+    {
+        public static BuyOrderResponse ToBuyOrderResponse(this BuyOrder buyOrder)
+        {
+            return new BuyOrderResponse()
+            {
+                BuyOrderId = buyOrder.BuyOrderId,
+                StockSymbol = buyOrder.StockSymbol,
+                StockName = buyOrder.StockName,
+                DateAndTimeOfOrder = buyOrder.DateAndTimeOfOrder,
+                Quantity = buyOrder.Quantity,
+                Price = buyOrder.Price,
+            };
         }
     }
 }

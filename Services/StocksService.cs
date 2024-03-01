@@ -1,28 +1,51 @@
-﻿using ServiceContracts;
+﻿using Entities;
+using ServiceContracts;
 using ServiceContracts.DTOs;
+using Services.Helpers;
 
 namespace Services
 {
     public class StocksService : IStocksService
     {
-        public Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest)
+        private readonly List<BuyOrder> _buyOrders = new List<BuyOrder>();
+        private readonly List<SellOrder> _sellOrders = new List<SellOrder>();
+
+        public async Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest)
         {
-            throw new NotImplementedException();
+            if (buyOrderRequest == null) throw new ArgumentNullException(nameof(buyOrderRequest));
+            ValidationHelper.ValidateModel(buyOrderRequest);
+
+            var buyOrder = buyOrderRequest.ToBuyOrder(Guid.NewGuid());
+
+            _buyOrders.Add(buyOrder);
+
+            return buyOrder.ToBuyOrderResponse();
         }
 
-        public Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest)
+        public async Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest)
         {
-            throw new NotImplementedException();
+            if (sellOrderRequest == null) throw new ArgumentNullException(nameof(sellOrderRequest));
+            ValidationHelper.ValidateModel(sellOrderRequest);
+
+            var sellOrder = sellOrderRequest.ToSellOrder(Guid.NewGuid());
+
+            _sellOrders.Add(sellOrder);
+
+            return sellOrder.ToSellOrderResponse();
         }
 
-        public Task<List<BuyOrderResponse>> GetAllBuyOrders()
+        public async Task<List<BuyOrderResponse>> GetAllBuyOrders()
         {
-            throw new NotImplementedException();
+            var allBuyOrders = _buyOrders.Select(buyOrder => buyOrder.ToBuyOrderResponse()).ToList();
+
+            return allBuyOrders;
         }
 
-        public Task<List<SellOrderResponse>> GetAllSellOrders()
+        public async Task<List<SellOrderResponse>> GetAllSellOrders()
         {
-            throw new NotImplementedException();
+            var allSellOrders = _sellOrders.Select(sellOrder => sellOrder.ToSellOrderResponse()).ToList();
+
+            return allSellOrders;
         }
     }
 }

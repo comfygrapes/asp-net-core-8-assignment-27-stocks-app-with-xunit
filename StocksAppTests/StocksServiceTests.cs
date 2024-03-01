@@ -21,7 +21,7 @@ namespace StocksAppTests
             BuyOrderRequest? buy_order_request = null;
 
             await Assert.ThrowsAsync<ArgumentNullException>(async () => {
-                var buy_order_response = await _stocksService.CreateBuyOrder(buy_order_request);
+                await _stocksService.CreateBuyOrder(buy_order_request);
             });
         }
 
